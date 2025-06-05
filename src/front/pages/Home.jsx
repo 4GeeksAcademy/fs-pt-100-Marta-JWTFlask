@@ -1,52 +1,26 @@
-import React, { useEffect } from "react"
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { Link } from "react-router-dom";
+import { Login } from "../components/login";
+import { useNavigate } from "react-router-dom";
+
+import "../index.css";
 
 export const Home = () => {
+	const navigate = useNavigate()
 
-	const { store, dispatch } = useGlobalReducer()
-
-	const loadMessage = async () => {
-		try {
-			const backendUrl = import.meta.env.VITE_BACKEND_URL
-
-			if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
-
-			const response = await fetch(backendUrl + "/api/hello")
-			const data = await response.json()
-
-			if (response.ok) dispatch({ type: "set_hello", payload: data.message })
-
-			return data
-
-		} catch (error) {
-			if (error.message) throw new Error(
-				`Could not fetch the message from the backend.
-				Please check if the backend is running and the backend port is public.`
-			);
-		}
-
-	}
-
-	useEffect(() => {
-		loadMessage()
-	}, [])
-
+	const handelProfile = () => {
+		localStorage.getItem("token")? navigate ("/private") : navigate("/login")
+	};
 	return (
-		<div className="text-center mt-5">
-			<h1 className="display-4">Hello Rigo!!</h1>
-			<p className="lead">
-				<img src={rigoImageUrl} className="img-fluid rounded-circle mb-3" alt="Rigo Baby" />
-			</p>
-			<div className="alert alert-info">
-				{store.message ? (
-					<span>{store.message}</span>
-				) : (
-					<span className="text-danger">
-						Loading message from the backend (make sure your python 🐍 backend is running)...
-					</span>
-				)}
+		<div className="home-container">
+			<div className="Login-container">
+				<Login />
+				<p className="text-center text-black mt-3">
+					¿No tienes cuenta? <Link to="/register" className="text-info">Regístrate</Link> aquí
+				</p>
+				<p className="text-center text-black mt-3">
+					Your <Link to="/private" className="text-info">Profile</Link>
+				</p>
 			</div>
 		</div>
 	);
-}; 
+};
