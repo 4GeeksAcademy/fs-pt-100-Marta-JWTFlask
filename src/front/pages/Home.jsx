@@ -18,8 +18,9 @@ export const Home = () => {
 					¿No tienes cuenta? <Link to="/register" className="text-info">Regístrate</Link> aquí
 				</p>
 				<p className="text-center text-black mt-3">
-					Your <Link to="/private" className="text-info">Profile</Link>
-				</p>
+	Your <span onClick={handelProfile} className="text-info" style={{ cursor: "pointer" }}>Profile</span>
+</p>
+
 			</div>
 		</div>
 	);

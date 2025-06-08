@@ -36,17 +36,17 @@ userServices.login = async (formData) => {
 
     const data = await resp.json();
 
-    if (!resp.ok) throw Error(data.error || "Something went wrong");
+    if (!resp.ok) throw Error(data.error || "Usuario no encontrado");
 
-    localStorage.setItem('token', data.token)
+    localStorage.setItem('token', data.token);
 
     return data;
-
   } catch (error) {
     console.log("Login error:", error.message);
-    throw error; 
+    throw error;
   }
 };
+
 
 userServices.getUserInfo = async () => {
      try {
